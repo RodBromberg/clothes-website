@@ -13,6 +13,13 @@ const config = {
   measurementId: "G-YVHQM552FJ",
 };
 
+// if userAuth does not exist do nothing
+// userRef grabs the user from the users collection
+// snapShot runs a .get() to check the user profile
+// if one does NOT exist
+// destructure displayName and email off of the userAuth obj
+// then userRef.set will set the displayName, email, createdAt and additional data
+//
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -22,13 +29,13 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
-    const createdAd = new Date();
+    const createdAt = new Date();
 
     try {
       await userRef.set({
         displayName,
         email,
-        createdAd,
+        createdAt,
         ...additionalData,
       });
     } catch (error) {
